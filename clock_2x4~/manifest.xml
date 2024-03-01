@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Clock frameRate="30" screenWidth="1080" type="awesome">
+  <VariableBinders>
+    <ContentProviderBinder columns="icon,title,content,time,info,subtext,key" countName="hasnotifications" name="data" uri="content://keyguard.notification/notifications">
+      <List name="notice"/>
+    </ContentProviderBinder>
+    <ContentProviderBinder columns="city_id,city_name,weather_type,aqilevel,description,temperature,forecast_type,tmphighs,tmplows,wind,humidity,sunrise,sunset,pressure,weathernamesfrom,forecast_type,publish_time" countName="hasweather" name="WeatherProvider" uri="content://weather/actualWeatherData/1">
+      <Variable column="city_id" name="DefaultLockScreen_weather_city_id" type="string"/>
+      <Variable column="city_name" name="DefaultLockScreen_weather_location" type="string"/>
+      <Variable column="weather_type" name="DefaultLockScreen_weather_id" type="int"/>
+      <Variable column="temperature" name="DefaultLockScreen_weather_temperature" type="string"/>
+      <Variable column="aqilevel" name="DefaultLockScreen_weather_aqi" type="int"/>
+      <Variable column="sunrise" name="DefaultLockScreen_weather_sunrise" type="int"/>
+      <Variable column="sunset" name="DefaultLockScreen_weather_sunset" type="int"/>
+      <Variable column="forecast_type" name="DefaultLockScreen_weather_forecast_type" type="int"/>
+      <Variable column="wind" name="DefaultLockScreen_weather_wind" type="string"/>
+      <Variable column="pressure" name="DefaultLockScreen_weather_pressure" type="int"/>
+      <Variable column="humidity" name="DefaultLockScreen_weather_humidity" type="int"/>
+      <Variable column="weather_type" name="DefaultLockScreen_weather_type" type="string[]"/>
+      <Variable column="description" name="DefaultLockScreen_weather_description" type="string"/>
+      <Variable column="weathernamesfrom" name="DefaultLockScreen_weather_weathernamesfrom" type="string[]"/>
+      <Variable column="tmphighs" name="DefaultLockScreen_weather_temphigh" type="string[]"/>
+      <Variable column="tmplows" name="DefaultLockScreen_weather_templow" type="string[]"/>
+      <Variable column="publish_time" name="DefaultLockScreen_weather_publish_time" type="string"/>
+      <Trigger>
+        <VariableCommand expression="ifelse(#DefaultLockScreen_weather_aqi }= 0 ** #DefaultLockScreen_weather_aqi {= 50,&apos;空气优&apos;,#DefaultLockScreen_weather_aqi}50 ** #DefaultLockScreen_weather_aqi {= 100,&apos;空气良好&apos;,#DefaultLockScreen_weather_aqi}100 ** #DefaultLockScreen_weather_aqi {= 150,&apos;轻度污染&apos;,#DefaultLockScreen_weather_aqi}150 ** #DefaultLockScreen_weather_aqi {= 200,&apos;中度污染&apos;,#DefaultLockScreen_weather_aqi}200 ** #DefaultLockScreen_weather_aqi {= 300,&apos;严重污染&apos;,#DefaultLockScreen_weather_aqi}300,&apos;重度污染&apos;,&apos;获取信息异常&apos;)" name="DefaultLockScreen_weather_air_quality" type="string"/>
+        <VariableCommand expression="ifelse(#DefaultLockScreen_weather_id}25 || #DefaultLockScreen_weather_id{0,0, (#DefaultLockScreen_weather_id }= 4 ** #DefaultLockScreen_weather_id {= 6 || #DefaultLockScreen_weather_id }= 8 ** #DefaultLockScreen_weather_id {= 11 || #DefaultLockScreen_weather_id == 25),4,#DefaultLockScreen_weather_id }= 13 ** #DefaultLockScreen_weather_id {= 17,13 ,#DefaultLockScreen_weather_id }= 18 ** #DefaultLockScreen_weather_id {= 21 || #DefaultLockScreen_weather_id == 23,18,#DefaultLockScreen_weather_id)" name="weatherId"/>
+        <VariableCommand expression="90*(((#hour24-8)*3600000+#minute*60000+#second*1000)/#DefaultLockScreen_weather_sunset)-45" name="DefaultLockScreen_weather_sun_rotation"/>
+        <VariableCommand expression="max(min(#DefaultLockScreen_weather_sun_rotation,45),-45)+45" name="DefaultLockScreen_weather_rot_angle"/>
+      </Trigger>
+    </ContentProviderBinder>
+    <ContentProviderBinder columns="aqi,pm25,pm10,so2,no2" countName="hasweatherinfo" dependency="WeatherProvider" uriFormat="content://weatherinfo/aqi/%s" uriParas="@DefaultLockScreen_weather_city_id">
+      <Variable column="pm25" name="DefaultLockScreen_weather_pm25" type="int"/>
+      <Variable column="no2" name="DefaultLockScreen_weather_no2" type="int"/>
+      <Variable column="pm10" name="DefaultLockScreen_weather_pm10" type="int"/>
+      <Variable column="so2" name="DefaultLockScreen_weather_so2" type="int"/>
+    </ContentProviderBinder>
+    <ContentProviderBinder columns="city_id,city_name,weather_type,aqilevel,description,temperature,forecast_type,tmphighs,tmplows,wind,humidity" countName="hasweather" name="WeatherCard_WeatherService" uri="content://weather/actualWeatherData/1">
+      <Variable column="city_id" name="WeatherCard_weatherLocationId" type="string"/>
+      <Variable column="city_name" name="WeatherCard_weatherLocation" type="string"/>
+      <Variable column="weather_type" name="WeatherCard_weatherId" type="int"/>
+      <Variable column="weather_type" name="WeatherCard_weatherType" type="string[]"/>
+      <Variable column="description" name="WeatherCard_weatherDescription" type="string"/>
+      <Variable column="temperature" name="WeatherCard_weatherTemperature" type="string"/>
+      <Variable column="aqilevel" name="WeatherCard_weatherAqi" type="int"/>
+      <Variable column="tmphighs" name="WeatherCard_weatherTemphigh" type="string[]"/>
+      <Variable column="tmplows" name="WeatherCard_weatherTemplow" type="string[]"/>
+      <Trigger>
+        <VariableCommand expression="ifelse(#WeatherCard_weatherAqi }= 0 ** #WeatherCard_weatherAqi{50,&apos;优&apos;, #WeatherCard_weatherAqi }= 50 ** #WeatherCard_weatherAqi{100,&apos;良&apos;, #WeatherCard_weatherAqi }= 100 ** #WeatherCard_weatherAqi{150,&apos;轻度污染&apos;, #WeatherCard_weatherAqi }= 150 ** #WeatherCard_weatherAqi{200,&apos;中度污染&apos;, #WeatherCard_weatherAqi }= 200 ** #WeatherCard_weatherAqi{300,&apos;重度污染&apos;, #WeatherCard_weatherAqi }= 300 ** #WeatherCard_weatherAqi {= 500,&apos;严重污染&apos;, &apos;&apos;)" name="WeatherCard_airQuality" type="string"/>
+        <VariableCommand expression="ifelse(#WeatherCard_weatherId}25 || #WeatherCard_weatherId{0,0, (#WeatherCard_weatherId }= 4 ** #WeatherCard_weatherId {= 6 || #WeatherCard_weatherId }= 8 ** #WeatherCard_weatherId {= 11 || #WeatherCard_weatherId == 25),4,#WeatherCard_weatherId }= 13 ** #WeatherCard_weatherId {= 17,13 ,#WeatherCard_weatherId }= 18 ** #WeatherCard_weatherId {= 21 || #WeatherCard_weatherId == 23,18,#WeatherCard_weatherId)" name="WeatherCard_weatherOutId"/>
+      </Trigger>
+
+    </ContentProviderBinder>
+	
+  </VariableBinders>
+	<Image align="center" alignV="center" alpha="255*0,10" src="1ap.9.png" h="570" w="1080" x="#view_width/2" y="#view_height/2"/>
+ <Image align="center" alignV="center" alpha="255*0.45" src="2ap.9.png" h="220" w="540" x="#view_width/2-200" y="#view_height/2-125"/> 
+ <Image align="center" alignV="center" alpha="255*0.45" src="2ap.9.png" h="220" w="370" x="#view_width/2+290" y="#view_height/2-125"/>
+ <Image align="center" alignV="center" alpha="255*0.45" src="2ap.9.png" h="205" w="540" x="#view_width/2-200" y="#view_height/2+125"/> 
+ <Image align="center" alignV="center" alpha="255*0.45" src="2ap.9.png" h="205" w="370" x="#view_width/2+290" y="#view_height/2+125"/>
+ 	
+
+
+  <Time align="center" alignV="center" src="time.png" x="#view_width/2-200" y="#view_height/2-125"/>
+  <DateTime align="center" alignV="center" color="#FFECDFB5" format="EEEE" size="54" x="#view_width/2-200" y="#view_height/2+89"/>
+  <DateTime align="center" alignV="center" color="#ff9DDFDA" format="MMMM d" size="54" x="#view_width/2-200" y="#view_height/2+159"/>
+  <Group x="#view_width/2+234" y="#view_height/2+25">
+    <Image align="center" alignV="center" h="200" src="weather/weather.png" srcid="#weatherId" w="200" x="60" y="-150"/>
+    <Text align="center" alignV="center" color="#FFECC3B5" fontFamily="mitype-normal" size="54" textExp="@DefaultLockScreen_weather_temperature" x="60" y="135"/>
+    <Text align="center" alignV="center" color="#ff9DDFDA" size="54" textExp="@DefaultLockScreen_weather_description" x="60" y="65"/>
+  </Group>
+  <Button align="center" alignV="center" h="250" name="clock_button" w="400" x="#view_width/2-276" y="#view_height/2-100"/>
+  <Button align="center" alignV="center" h="250" w="400" x="#view_width/2-276" y="#view_height/2-100">
+    <Triggers>
+      <Trigger action="up">
+        <IntentCommand action="android.intent.action.MAIN" class="com.android.deskclock.DeskClockTabActivity" package="com.android.deskclock"/>
+      </Trigger>
+    </Triggers>
+  </Button>
+  <Button align="center" alignV="center" h="500" w="350" x="#view_width/2+234" y="#view_height/2+25">
+    <Triggers>
+      <Trigger action="up">
+        <IntentCommand action="android.intent.action.MAIN" class="com.miui.weather2.ActivityWeatherCycle" package="com.miui.weather2"/>
+        <IntentCommand action="android.intent.action.MAIN" class="com.miui.weather2.ActivityWeatherMain" package="com.miui.weather2"/>
+      </Trigger>
+    </Triggers>
+  </Button>
+  <Button align="center" alignV="center" h="200" w="400" x="#view_width/2-276" y="#view_height/2+155">
+    <Triggers>
+      <Trigger action="up">
+        <IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.xiaomi.calendar"/>
+	<IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.android.calendar"/>
+	<IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.google.calendar"/>
+      </Trigger>
+    </Triggers>
+  </Button>
+</Clock>

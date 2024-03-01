@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<theme>
+<version><![CDATA[1.0]]></version>
+<uiVersion>10</uiVersion>
+<author><![CDATA[Amey Patil]]></author>
+<designer><![CDATA[Amey Patil]]></designer>
+<title><![CDATA[Paper UI]]></title>
+<description/>
+<authors>
+<author locale="en_US"><![CDATA[Amey Patil]]></author>
+<author locale="zh_CN"><![CDATA[Amey Patil]]></author>
+</authors>
+<designers>
+<designer locale="en_US"><![CDATA[Amey Patil]]></designer>
+<designer locale="zh_CN"><![CDATA[Amey Patil]]></designer>
+</designers>
+<titles>
+<title locale="en_US"><![CDATA[Paper UI]]></title>
+<title locale="zh_CN"><![CDATA[Paper UI]]></title>
+</titles>
+<descriptions>
+<description locale="en_US"><![CDATA[Paper Ui : A calm and complete theme inspired from a whatsapp wallpaper is a dual mode theme with less memory consumption and many ui changes which will give you a better experience during reading.
+Suggestion : Turn on reading mode for better experience.
+.
+Features
+--> Dark and light wallpapers are added on homescreen; you can switch them according to the mode (dark/light) you use in your phone.
+--> Lockscreen wallpaper can be changed by changing homescreen wallpaper
+--> Alarm background added.
+--> Colourful square shaped icons
+--> Minimalistic and geometric design.
+--> Square shaped sliders ( on/off toggles ).
+--> Whatsapp themed.]]></description>
+</descriptions>
+<miuiAdapterVersion>2.0</miuiAdapterVersion>
+</theme>

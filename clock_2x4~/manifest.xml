@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<xml version="1.0" encoding="utf-8">
 
 <Clock frameRate="30" screenWidth="1080" type="awesome">
   <VariableBinders>
@@ -89,9 +89,9 @@
   <Button align="center" alignV="center" h="200" w="400" x="#view_width/2-276" y="#view_height/2+155">
     <Triggers>
       <Trigger action="up">
-        <IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.xiaomi.calendar"/>
+        <IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.miui.calendar"/>
 	<IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.android.calendar"/>
-	<IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.google.calendar"/>
+	<IntentCommand action="android.intent.action.MAIN" class="com.xiaomi.calendar.AllInOneActivity" package="com.google.qndroid.calendar"/>
       </Trigger>
     </Triggers>
   </Button>
